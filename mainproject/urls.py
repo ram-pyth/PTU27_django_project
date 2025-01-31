@@ -21,3 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('library/', include('library.urls'))  # library.urls folderis.failas
 ]
+
+
+# homepage/admin
+# homepage/library
+# homepage/library/knygos
