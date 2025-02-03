@@ -13,6 +13,16 @@ class Author(models.Model):
     def __str__(self):
         return f'{self.last_name} {self.first_name}'
 
+    def display_books(self):
+        """
+        book_set - django automatiškai
+        kuriamas relationship į vaikinės
+        lentelės susietas eilutes vienai
+        knygai
+        """
+        res = ', '.join(elem.title for elem in self.book_set.all()[:3])
+        return res
+
     class Meta:
         """
         Globalūs nuostatai Author modelio
