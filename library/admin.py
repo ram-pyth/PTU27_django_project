@@ -4,11 +4,13 @@ from .models import Author, Book, BookInstance, Genre
 
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'isbn', 'display_genres')
-
+    search_fields = ('title', 'author__last_name')  # FK__tėvinėslaukas
 
 class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ('book', 'id', 'due_back', 'status')
     list_filter = ('status', 'due_back')
+    search_fields = ('id', 'book__title', 'book__author__last_name')  # FK__FK__laukas
+    list_editable = ('due_back', 'status')
 
     fieldsets = (
         ('Knyga', {'fields': ['book']}),
