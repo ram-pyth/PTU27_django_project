@@ -29,10 +29,14 @@ class Genre(models.Model):
     help_text - admino svetainėje
     rodomas pagalbos tekstas prie šio lauko
     """
-    name = models.CharField('Žanrai', max_length=15, help_text="Įveskite knygos žanrus")
+    name = models.CharField('Žanras', max_length=15, help_text="Įveskite knygos žanrus")
 
     def __str__(self):
         return f'{self.name}'
+
+    class Meta:
+        verbose_name = 'Žanras'
+        verbose_name_plural = 'Žanrai'
 
 
 class Book(models.Model):
@@ -44,7 +48,7 @@ class Book(models.Model):
     summary = models.TextField('Aprašymas', max_length=1300)
     isbn = models.CharField('ISBN', max_length=13)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
-    genres = models.ManyToManyField(Genre)
+    genres = models.ManyToManyField(Genre, blank=True)
 
     def display_genres(self):
         res = ', '.join(elem.name for elem in self.genres.all()[:3])
