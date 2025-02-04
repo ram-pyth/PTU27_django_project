@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Vilniaus rajono biblioteka</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
 <h1>Vilniaus rajono biblioteka</h1>
 <h2>Statistika:</h2>
 <p>Autorių skaičius: {{ num_authors_t }}</p>
 <p>Knygų skaičius: {{ num_books_t }}</p>
 <p>Knygų egzempliorių skaičius: {{ num_book_instances_t }}</p>
 <p>Knygų egzempliorių su statusu "galima paimti" skaičius: {{ num_book_insts_available_t }}</p>
-
-</body>
-</html>
+{% endblock %}
