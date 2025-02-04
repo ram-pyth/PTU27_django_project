@@ -11,7 +11,9 @@
     <ul>
         {% for book in one_author.book_set.all %}
             <li>
-                {{ book.title }} {{ book.isbn }}
+                <a href="{% url 'book-one' book.id %}">
+                {{ book.title }}</a>
+                {{ book.isbn }}
             </li>
         {% endfor %}
     </ul>
