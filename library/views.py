@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import HttpResponse
 
 from .models import Author, Book, BookInstance, Genre
@@ -27,3 +27,10 @@ def get_authors(request):
     authors = Author.objects.all()
     context = {'authors': authors}
     return render(request, 'authors.html', context=context)
+
+
+def get_one_author(request, author_id):
+    # author_id - integer, pagal jį ieškom author lentelėj eilutės
+    one_author = get_object_or_404(Author, pk=author_id)
+    context = {'one_author': one_author}
+    return render(request, 'author.html', context=context)
