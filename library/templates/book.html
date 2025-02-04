@@ -3,6 +3,10 @@
 {% block content %}
 <h1>Knyga</h1>
 <h4> {{ book }} </h4>
-<p></p>
-
+<p class="bg-dark text-light">Autorius:
+<a href="{% url 'author-one' book.author.id %}">
+    {{ book.author }}</a>
+</p>
+<p><b>Žanrai:</b> {{ book.display_genres }}</p>
+<p><b>Aprašymas:</b> {{ book.summary }} </p>
 {% endblock %}
