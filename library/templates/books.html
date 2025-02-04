@@ -4,7 +4,10 @@
 <h1>Turimos knygos:</h1>
 <ul>
     {% for book in book_list %}
-        <li>{{ book }}</li>
+        <li><a href="{% url 'book-one' book.id %}">
+            {{ book.title }}</a>
+            {{ book.author }}
+        </li>
     {% endfor %}
 </ul>
 <p></p>
