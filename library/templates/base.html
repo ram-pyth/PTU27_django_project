@@ -20,7 +20,7 @@
             <ul class="sidebar-nav">
                 <li><a href="{% url 'index_nm' %}">Pradžia</a></li>
                 <li><a href="" class="text-nowrap">Visos knygos</a></li>
-                <li><a href="" class="text-nowrap">Visi autoriai</a></li> {# jinja komentaras #}
+                <li><a href="{% url 'authors-all' %}" class="text-nowrap">Visi autoriai</a></li> {# jinja komentaras #}
                 <li>
                     <form action="" method="get" class="form-group">
                         <input type="text" name="search_text" class="form-control" placeholder="Paieška" style="min-width: 6rem;">

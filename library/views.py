@@ -20,3 +20,10 @@ def index(request):
                   }
 
     return render(request, 'index.html', context=context_my)
+
+
+def get_authors(request):
+    # visos eilutės iš author lentelės
+    authors = Author.objects.all()
+    context = {'authors': authors}
+    return render(request, 'authors.html', context=context)
