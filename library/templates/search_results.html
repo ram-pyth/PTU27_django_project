@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Paieškos rezultatai</h1>
+<h4>Pagal paieškos frazę <b><i>{{ query_text }}</i></b> rezultatai:</h4>
+{% if book_list %}
+<ul>
+    {% for book in book_list %}
+        <li>
+            <a href="{% url 'book-one' book.id %}">
+                {{ book.title }}
+            </a>
+            {{ book.author }}
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Nieko nerasta..</p>
+{% endif %}
+{% endblock %}

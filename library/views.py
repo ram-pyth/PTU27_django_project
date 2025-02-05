@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
+from django.db.models import Q # Q - kombinuoti keletą filtravimo sąlygų su OR
 
 from .models import Author, Book, BookInstance, Genre
 
@@ -46,3 +47,19 @@ class BookDetailView(generic.DetailView):
     model = Book
     context_object_name = 'book'  # book - standartinis kintamojo template pavadinimas,sukuriamas django
     template_name = 'book.html'
+
+
+def search(request):
+    # request.GET - žodynas su requesto params
+    query_text = request.GET.get('search_text')
+    # https://docs.djangoproject.com/en/4.2/ref/models/lookups/
+    search_results = Book.objects.filter(
+        Q(title__icontains=query_text)
+        | Q(author__last_name__icontains=query_text)
+        | Q(summary__icontains=query_text)
+    )
+
+    context = {'query_text': query_text,
+               'book_list': search_results}
+
+    return render(request, 'search_results.html', context=context)
