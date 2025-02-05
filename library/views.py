@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from django.db.models import Q # Q - kombinuoti keletą filtravimo sąlygų su OR
+from django.db.models import Q  # Q - kombinuoti keletą filtravimo sąlygų su OR
+from django.core.paginator import Paginator  # funkcijų puslapiavimui
 
 from .models import Author, Book, BookInstance, Genre
 
@@ -26,7 +27,10 @@ def index(request):
 def get_authors(request):
     # visos eilutės iš author lentelės
     authors = Author.objects.all()
-    context = {'authors': authors}
+    paginator = Paginator(authors, 3)
+    page_number = request.GET.get('page')
+    paged_authors = paginator.get_page(page_number)
+    context = {'authors': paged_authors}
     return render(request, 'authors.html', context=context)
 
 
