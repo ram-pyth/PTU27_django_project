@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+
 <h1>Turimos knygos:</h1>
 <div class="pagination">
     <span class="step-links">
@@ -24,6 +25,11 @@
             {{ book.title }}</a>
             {{ book.author }}
         </li>
+        {% if book.cover %}
+            <img src="{{ book.cover.url }}"/>
+        {% else %}
+            <img src="{% static 'img/no-image.png' %}"/>
+        {% endif %}
     {% endfor %}
 </ul>
 <p></p>
