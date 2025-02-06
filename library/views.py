@@ -45,7 +45,7 @@ class BookListView(generic.ListView):
     model = Book
     context_object_name = 'book_list'  # book_list - standartinis kintamojo template pavadinimas,sukuriamas django
     template_name = 'books.html'
-    paginate_by = 5  # templeite sukuriamas page_obj
+    paginate_by = 8  # templeite sukuriamas page_obj
 
 
 class BookDetailView(generic.DetailView):
