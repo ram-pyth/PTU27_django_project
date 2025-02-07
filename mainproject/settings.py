@@ -128,3 +128,6 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
+
+# email nuostatos, testavimui, emailai bus formuojami terminale
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
