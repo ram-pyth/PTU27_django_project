@@ -15,10 +15,15 @@ def index(request):
     # knygų egz su statusu g(galima paimti) skaičius
     num_book_insts_available = BookInstance.objects.filter(status__exact='g').count()
 
+    # skaitliukas anoniminiams useriams
+    num_visits = request.session.get('num_visits', 1)
+    request.session['num_visits'] = num_visits + 1
+
     context_my = {'num_authors_t': num_authors,
                   'num_books_t': num_books,
                   'num_book_instances_t': num_book_instances,
                   'num_book_insts_available_t': num_book_insts_available,
+                  'num_visits_t': num_visits
                   }
 
     return render(request, 'index.html', context=context_my)

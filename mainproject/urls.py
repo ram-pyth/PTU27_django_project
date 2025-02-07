@@ -24,8 +24,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('library/', include('library.urls')),  # library.urls folderis.failas
     path('', RedirectView.as_view(url='library/', permanent=True)),
+    path('accounts/', include('django.contrib.auth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 # homepage/admin
 # homepage/library

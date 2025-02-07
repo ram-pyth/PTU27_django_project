@@ -7,4 +7,10 @@
 <p>Knygų skaičius: {{ num_books_t }}</p>
 <p>Knygų egzempliorių skaičius: {{ num_book_instances_t }}</p>
 <p>Knygų egzempliorių su statusu "galima paimti" skaičius: {{ num_book_insts_available_t }}</p>
+{% if user.username %}
+    <p>Sveiki, {{ user.username }}</p>
+{% else %}
+    <p>Sveiki, svečias</p>
+{% endif %}
+<p>Jūs lankotės {{ num_visits_t }} kartą</p>
 {% endblock %}
