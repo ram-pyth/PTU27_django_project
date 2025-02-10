@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from datetime import date
 import PIL
 
 
@@ -98,6 +99,13 @@ class BookInstance(models.Model):
                               default='a',
                               blank=True,
                               help_text='Knygos egzemplioriaus statusas')
+
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True  # pradelsta
+        else:
+            return False
 
     def __str__(self):
         return f'{self.id} {self.status} {self.due_back} {self.book} {self.book.author}'
