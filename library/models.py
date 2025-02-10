@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 import uuid
 from datetime import date
 import PIL
+from tinymce.models import HTMLField
 
 
 class Author(models.Model):
@@ -12,7 +13,8 @@ class Author(models.Model):
     """
     first_name = models.CharField('Vardas', max_length=50)
     last_name = models.CharField('Pavardė', max_length=50)
-    description = models.TextField('Aprašymas', max_length=2000, default='biografija ir tt..')
+    # description = models.TextField('Aprašymas', max_length=2000, default='biografija ir tt..')
+    description = HTMLField()
 
     def __str__(self):
         return f'{self.last_name} {self.first_name}'
