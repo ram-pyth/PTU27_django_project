@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ user }}</h1>
+<p>Mano paimtos knygos:</p>
+{% if bookinstance_list %}
+<ul>
+    {% for bookinstance in bookinstance_list %}
+        <li>
+            {{ bookinstance.id }} {{ bookinstance.book }}
+            {{ bookinstance.status }} {{ bookinstance.reader }}
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Jūs neturite paėmęs knygų</p>
+{% endif %}
+{% endblock %}

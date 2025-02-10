@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.db.models import Q  # Q - kombinuoti keletą filtravimo sąlygų su OR
 from django.core.paginator import Paginator  # funkcijų puslapiavimui
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Author, Book, BookInstance, Genre
 
@@ -73,3 +74,12 @@ def search(request):
                'book_list': search_results}
 
     return render(request, 'search_results.html', context=context)
+
+
+class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+    model = BookInstance
+    context_object_name = 'bookinstance_list'
+    template_name = 'user_books.html'
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(reader=self.request.user)
