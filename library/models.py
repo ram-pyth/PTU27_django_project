@@ -123,3 +123,11 @@ class BookReview(models.Model):
     def __str__(self):
         """Tik testavimui, content kerpam iki 50 simbolių"""
         return f'{self.date_created}, {self.reviewer}, {self.book}, {self.content[:50]}'
+
+
+class Profile(models.Model):
+    picture = models.ImageField(upload_to='profile_pics', null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user.username} profilis'

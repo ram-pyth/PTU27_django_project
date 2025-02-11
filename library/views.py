@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
 from django.db.models import Q  # Q - kombinuoti keletą filtravimo sąlygų su OR
 from django.core.paginator import Paginator  # funkcijų puslapiavimui
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
 
 from .models import Author, Book, BookInstance, User
 from .forms import BookReviewForm
@@ -64,6 +65,26 @@ class BookDetailView(generic.edit.FormMixin, generic.DetailView):
     template_name = 'book.html'
     form_class = BookReviewForm
 
+    # post iš formos
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()  # form - BookReviewForm instance
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    # formos custom validacija(jos metu įrašom komentarui knygą ir userį
+    def form_valid(self, form):
+        self.book_object = self.get_object()  # self.book_object - viewso Book instance
+        form.instance.book = self.book_object
+        form.instance.reviewer = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    # nurodom kur patenkam PO posto
+    def get_success_url(self):
+        return reverse('book-one', kwargs={'pk': self.book_object.id})
+
 
 def search(request):
     # request.GET - žodynas su requesto params
@@ -122,3 +143,8 @@ def register_user(request):
         User.objects.create_user(username=username, email=email, password=password)
         messages.info(request, f'Vartotojas {username} užregistruotas!')
         return redirect('login')
+
+
+@login_required()
+def get_user_profile(request):
+    return render(request, 'profile.html')
