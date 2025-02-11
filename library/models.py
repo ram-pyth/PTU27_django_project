@@ -126,7 +126,7 @@ class BookReview(models.Model):
 
 
 class Profile(models.Model):
-    picture = models.ImageField(upload_to='profile_pics', null=True, blank=True)
+    picture = models.ImageField(upload_to='profile_pics', blank=True, default='default-user.png')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
