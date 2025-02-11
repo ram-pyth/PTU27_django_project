@@ -16,8 +16,17 @@
 {% endif %}
 
 <p><b>Žanrai:</b> {{ book.display_genres }}</p>
-
 <p><b>Aprašymas:</b> {{ book.summary }} </p>
+<hr/>
+{% for bookreview in book.bookreview_set.all %}
+    <small><b>{{ bookreview.reviewer }}</b> <em>{{ bookreview.date_created }}</em></small>
+    <p class="bg-light">{{ bookreview.content }}</p>
+    <hr/>
+{% endfor %}
+{% if not book.bookreview_set.first %}
+    <p>Knyga komentarų kol kas neturi...</p>
+    <hr/>
+{% endif %}
 <h5>Knygos egzemplioriai:</h5>
 {% for bookinstance in book.bookinstance_set.all  %}
     <hr/>

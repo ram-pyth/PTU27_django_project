@@ -4,6 +4,7 @@ from django.db.models import Q  # Q - kombinuoti keletą filtravimo sąlygų su 
 from django.core.paginator import Paginator  # funkcijų puslapiavimui
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_protect
 
 from .models import Author, Book, BookInstance, User
 from .utils import check_pasword
@@ -87,6 +88,7 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
         return BookInstance.objects.filter(reader=self.request.user)
 
 
+@csrf_protect
 def register_user(request):
     if request.method == 'GET':
         return render(request, 'registration/registration.html')
