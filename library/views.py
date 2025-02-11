@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
 from .models import Author, Book, BookInstance, User
+from .utils import check_pasword
 
 
 def index(request):
@@ -98,7 +99,22 @@ def register_user(request):
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
 
+        if not check_pasword(password):
+            messages.error(request, 'Slaptažodis, mažiausiai 5 simboliai!!!')
+            return redirect('register')
+
         if password != password2:
             messages.error(request, 'Slaptažodžiai nesutampa')
             return redirect('register')
 
+        if User.objects.filter(username=username).exists():
+            messages.error(request, f'Vartotojo vardas {username} jau užimtas')
+            return redirect('register')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, f'Email {email} jau užregistruotas')
+            return redirect('register')
+
+        User.objects.create_user(username=username, email=email, password=password)
+        messages.info(request, f'Vartotojas {username} užregistruotas!')
+        return redirect('login')
