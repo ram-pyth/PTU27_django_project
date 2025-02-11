@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div>
 <img class="rounded-circle"
@@ -10,8 +10,8 @@
 <div>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ u_form }}
-        {{ p_form }}
+        {{ u_form | crispy }}
+        {{ p_form | crispy }}
         <div>
             <input type="submit" class="btn btn-outline-success" value="Išsaugoti pakeitimus"/>
         </div>
