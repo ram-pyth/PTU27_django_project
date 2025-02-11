@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 from datetime import date
-import PIL
+from PIL import Image
 from tinymce.models import HTMLField
 
 
@@ -131,3 +131,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} profilis'
+
+    def save(self, *args, **kwargs):
+        """
+        Pradžioje leidžiam padaryti išsaugojimo
+        veiksmą, po to su PIL biblioteka modifikuojam
+        išsaugoto paveikslėlio dydį
+        """
+        super().save(*args, **kwargs)  # numatytieji Model klasės veiksmai suvykdomi
+        img = Image.open(self.picture.path)
+        thumb_size = (150, 150)
+        img.thumbnail(thumb_size)
+        img.save(self.picture.path)
