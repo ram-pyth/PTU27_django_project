@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 
 from .models import Author, Book, BookInstance, User
+from .forms import BookReviewForm
 from .utils import check_pasword
 
 
@@ -57,10 +58,11 @@ class BookListView(generic.ListView):
     paginate_by = 8  # templeite sukuriamas page_obj
 
 
-class BookDetailView(generic.DetailView):
+class BookDetailView(generic.edit.FormMixin, generic.DetailView):
     model = Book
     context_object_name = 'book'  # book - standartinis kintamojo template pavadinimas,sukuriamas django
     template_name = 'book.html'
+    form_class = BookReviewForm
 
 
 def search(request):

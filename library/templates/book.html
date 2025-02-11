@@ -17,6 +17,16 @@
 
 <p><b>Žanrai:</b> {{ book.display_genres }}</p>
 <p><b>Aprašymas:</b> {{ book.summary }} </p>
+<div>
+    <h5>Palikite atsiliepimą apie knygą:</h5>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.content }}
+        <div>
+            <input type="submit" class="btn btn-outline-success btn-sm" value="Išsaugoti komentarą"/>
+        </div>
+    </form>
+</div>
 <hr/>
 {% for bookreview in book.bookreview_set.all %}
     <small><b>{{ bookreview.reviewer }}</b> <em>{{ bookreview.date_created }}</em></small>
