@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.db.models import Q  # Q - kombinuoti keletą filtravimo sąlygų su OR
 from django.core.paginator import Paginator  # funkcijų puslapiavimui
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
-from .models import Author, Book, BookInstance, Genre
+from .models import Author, Book, BookInstance, User
 
 
 def index(request):
@@ -83,3 +84,21 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return BookInstance.objects.filter(reader=self.request.user)
+
+
+def register_user(request):
+    if request.method == 'GET':
+        return render(request, 'registration/registration.html')
+
+    elif request.method == 'POST':
+        # paimam duomenis iš formos
+        # request.POST - žodynas
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
+
+        if password != password2:
+            messages.error(request, 'Slaptažodžiai nesutampa')
+            return redirect('register')
+

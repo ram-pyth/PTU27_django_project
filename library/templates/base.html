@@ -88,6 +88,9 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">Prisijungti</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}?next={{ request.path }}">Registruotis</a>
+            </li>
           {% endif %}
 
             <li class="nav-item">
@@ -120,6 +123,11 @@
         </div>
       </div>
     </nav>
+    {% for message in messages %}
+    <div class="alert" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
     <div class="container">{% block content %}{% endblock %}</div>
 
     <script
