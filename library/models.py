@@ -139,7 +139,8 @@ class Profile(models.Model):
         išsaugoto paveikslėlio dydį
         """
         super().save(*args, **kwargs)  # numatytieji Model klasės veiksmai suvykdomi
-        img = Image.open(self.picture.path)
-        thumb_size = (150, 150)
-        img.thumbnail(thumb_size)
-        img.save(self.picture.path)
+        if self.picture.path:
+            img = Image.open(self.picture.path)
+            thumb_size = (150, 150)
+            img.thumbnail(thumb_size)
+            img.save(self.picture.path)

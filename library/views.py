@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 
 from .models import Author, Book, BookInstance, User
-from .forms import BookReviewForm
+from .forms import BookReviewForm, ProfileUpdateForm, UserUpdateForm
 from .utils import check_pasword
 
 
@@ -147,4 +147,23 @@ def register_user(request):
 
 @login_required()
 def get_user_profile(request):
-    return render(request, 'profile.html')
+    if request.method == 'POST':
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        if p_form.is_valid() and u_form.is_valid():
+            p_form.save()
+            u_form.save()
+            messages.info(request, "Profilis atnaujintas")
+        else:
+            messages.error(request, "Profilis neatnaujintas")
+        return redirect('user-profile')
+
+    p_form = ProfileUpdateForm(instance=request.user.profile)
+    u_form = UserUpdateForm(instance=request.user)
+
+    context = {
+        'p_form': p_form,
+        'u_form': u_form
+    }
+
+    return render(request, 'profile.html', context=context)
