@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
 from django.db.models import Q  # Q - kombinuoti keletą filtravimo sąlygų su OR
 from django.core.paginator import Paginator  # funkcijų puslapiavimui
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
@@ -180,3 +180,19 @@ class BookInstanceByUserCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.reader = self.request.user
         form.instance.status = 'p'
         return super().form_valid(form)
+
+
+class BookInstanceByUserUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = BookInstance
+    form_class = UserBookInstanceCreateForm
+    template_name = 'user_book_form.html'
+    success_url = '/library/mybooks'
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        form.instance.status = 'p'
+        return super().form_valid(form)
+
+    def test_func(self):
+        bookinstance_object = self.get_object()
+        return bookinstance_object.reader == self.request.user
