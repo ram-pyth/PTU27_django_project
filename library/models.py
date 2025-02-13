@@ -126,7 +126,7 @@ class BookReview(models.Model):
 
 
 class Profile(models.Model):
-    picture = models.ImageField(upload_to='profile_pics', blank=True, default='default-user.png')
+    picture = models.ImageField(upload_to='profile_pics', default='default-user.png')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -139,8 +139,7 @@ class Profile(models.Model):
         išsaugoto paveikslėlio dydį
         """
         super().save(*args, **kwargs)  # numatytieji Model klasės veiksmai suvykdomi
-        if self.picture.path:
-            img = Image.open(self.picture.path)
-            thumb_size = (150, 150)
-            img.thumbnail(thumb_size)
-            img.save(self.picture.path)
+        img = Image.open(self.picture.path)
+        thumb_size = (150, 150)
+        img.thumbnail(thumb_size)
+        img.save(self.picture.path)

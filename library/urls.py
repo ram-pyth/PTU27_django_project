@@ -10,5 +10,6 @@ urlpatterns = [
     path('search/', views.search, name='search_nm'),
     path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-books'),
     path('register/', views.register_user, name='register'),
-    path('profile/', views.get_user_profile, name='user-profile')
+    path('profile/', views.get_user_profile, name='user-profile'),
+    path('mybooks/new', views.BookInstanceByUserCreateView.as_view(), name='my-borrowed-new'),
 ]

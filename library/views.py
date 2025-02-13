@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 
 from .models import Author, Book, BookInstance, User
-from .forms import BookReviewForm, ProfileUpdateForm, UserUpdateForm
+from .forms import BookReviewForm, ProfileUpdateForm, UserUpdateForm, UserBookInstanceCreateForm
 from .utils import check_pasword
 
 
@@ -145,7 +145,8 @@ def register_user(request):
         return redirect('login')
 
 
-@login_required()
+@login_required
+@csrf_protect
 def get_user_profile(request):
     if request.method == 'POST':
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -167,3 +168,15 @@ def get_user_profile(request):
     }
 
     return render(request, 'profile.html', context=context)
+
+
+class BookInstanceByUserCreateView(LoginRequiredMixin, generic.CreateView):
+    model = BookInstance
+    form_class = UserBookInstanceCreateForm
+    template_name = 'user_book_form.html'
+    success_url = '/library/mybooks'
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        form.instance.status = 'p'
+        return super().form_valid(form)
