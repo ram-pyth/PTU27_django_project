@@ -37,3 +37,8 @@ class UserBookInstanceCreateForm(forms.ModelForm):
             'status': forms.HiddenInput(),
             'due_back': DateInput()
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if kwargs['instance']:
+            self.fields['book'].disabled = True
