@@ -13,7 +13,9 @@
             <p class="{% if bookinstance.is_overdue %}text-danger">
             {% else %}text-success">
             {% endif %} {{ bookinstance.due_back }} {{ bookinstance.get_status_display }}
-            <a class="btn-secondary btn-sm" href="{% url 'my-borrowed-update' bookinstance.id %}">Redaguoti</a></p>
+            <a class="btn-secondary btn-sm" href="{% url 'my-borrowed-update' bookinstance.id %}">Redaguoti</a>
+            <a class="btn-danger btn-sm" href="{% url 'my-borrowed-delete' bookinstance.id %}">Ištrinti</a>
+            </p>
         </li>
     {% endfor %}
 </ul>

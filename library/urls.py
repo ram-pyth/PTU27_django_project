@@ -12,5 +12,6 @@ urlpatterns = [
     path('register/', views.register_user, name='register'),
     path('profile/', views.get_user_profile, name='user-profile'),
     path('mybooks/new', views.BookInstanceByUserCreateView.as_view(), name='my-borrowed-new'),
-    path('mybooks/update/<uuid:pk>', views.BookInstanceByUserUpdateView.as_view(), name='my-borrowed-update')
+    path('mybooks/update/<uuid:pk>', views.BookInstanceByUserUpdateView.as_view(), name='my-borrowed-update'),
+    path('mybooks/delete/<uuid:pk>', views.BookInstanceByUserDeleteView.as_view(), name='my-borrowed-delete'),
 ]

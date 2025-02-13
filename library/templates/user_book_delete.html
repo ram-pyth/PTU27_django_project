@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <p>Kopijos id: {{ bookinstance.id }}</p>
+    <p>Autorius: {{ bookinstance.book.author }}</p>
+    <p>Pavadinimas: {{ bookinstance.book }}</p>
+    <p>Grąžinimo data: {{ bookinstance.due_back }}</p>
+    <p>Statusas: {{ bookinstance.get_status_display }}</p>
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">TAIP</button>
+        <a class="btn btn-secondary" href="{% url 'my-books' %}">ATŠAUKTI</a>
+    </div>
+</form>
+
+{% endblock %}
