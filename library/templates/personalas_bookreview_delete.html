@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <p>Autorius: {{ bookreview.reviewer }}</p>
+    <p>Turinys: {{ bookreview.content }}</p>
+    <p>Data: {{ bookreview.date_created }}</p>
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">TAIP</button>
+        <a class="btn btn-secondary" href="{% url 'book-one' bookreview.book.id %}">ATŠAUKTI</a>
+    </div>
+</form>
+
+{% endblock %}

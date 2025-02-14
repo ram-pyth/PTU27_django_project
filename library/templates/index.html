@@ -19,4 +19,9 @@
         <p>vartotojas priklauso personalo grupei</p>
     {% endif %}
 {% endfor %}
+{% if user.is_staff %}
+    <p>Vartotojas priklauso admin saito staff grupei</p>
+{% else %}
+    <p>Nepriklauso staff</p>
+{% endif %}
 {% endblock %}
