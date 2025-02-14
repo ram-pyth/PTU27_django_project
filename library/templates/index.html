@@ -13,4 +13,10 @@
     <p>Sveiki, svečias</p>
 {% endif %}
 <p>Jūs lankotės {{ num_visits_t }} kartą</p>
+<p>{{ user.groups.all }}</p>
+{% for group in user.groups.all %}
+    {% if group.name == 'personalas' %}
+        <p>vartotojas priklauso personalo grupei</p>
+    {% endif %}
+{% endfor %}
 {% endblock %}
