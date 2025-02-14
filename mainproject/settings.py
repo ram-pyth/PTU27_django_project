@@ -29,7 +29,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'libraryAPI',
     'library.apps.LibraryConfig',
+    'rest_framework',
     'tinymce',
     'crispy_forms',
     'crispy_bootstrap4',
