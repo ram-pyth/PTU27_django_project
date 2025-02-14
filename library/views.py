@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 
-from .models import Author, Book, BookInstance, User
+from .models import Author, Book, BookInstance, User, BookReview
 from .forms import BookReviewForm, ProfileUpdateForm, UserUpdateForm, UserBookInstanceCreateForm
 from .utils import check_pasword
 
@@ -208,3 +208,19 @@ class BookInstanceByUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, gene
         bookinstance_object = self.get_object()
         return bookinstance_object.reader == self.request.user
 
+
+class BookReviewDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = BookReview
+    template_name = 'personalas_bookreview_delete.html'
+    context_object_name = 'bookreview'
+
+    def get_success_url(self):
+        bookreview_object = self.get_object()
+        return reverse('book-one', kwargs={'pk': bookreview_object.book.id})
+
+    def test_func(self):
+        check = False
+        for group in self.request.user.groups.all():
+            if group.name == 'personalas':
+                check = True
+        return check

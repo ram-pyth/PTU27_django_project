@@ -33,6 +33,12 @@
 {% for bookreview in book.bookreview_set.all %}
     <small><b>{{ bookreview.reviewer }}</b> <em>{{ bookreview.date_created }}</em></small>
     <p class="bg-light">{{ bookreview.content }}</p>
+
+    {% for group in user.groups.all %}
+        {% if group.name == 'personalas' %}
+        <a class="btn btn-danger btn-sm" href="{% url 'reviews-delete' bookreview.id %}">Trinti</a>
+        {% endif %}
+    {% endfor %}
     <hr/>
 {% endfor %}
 {% if not book.bookreview_set.first %}
