@@ -34,23 +34,23 @@
     <small><b>{{ bookreview.reviewer }}</b> <em>{{ bookreview.date_created }}</em></small>
     <p class="bg-light">{{ bookreview.content }}</p>
 
-    {% for group in user.groups.all %}
-        {% if group.name == 'personalas' %}
-        <a class="btn btn-danger btn-sm" href="{% url 'reviews-delete' bookreview.id %}">Trinti</a>
-        {% endif %}
-    {% endfor %}
+        {% for group in user.groups.all %}
+            {% if group.name == 'personalas' %}
+                <a class="btn btn-danger btn-sm" href="{% url 'reviews-delete' bookreview.id %}">Trinti</a>
+            {% endif %}
+        {% endfor %}
     <hr/>
 {% endfor %}
 {% if not book.bookreview_set.first %}
     <p>Knyga komentarų kol kas neturi...</p>
-    <hr/>
+<hr/>
 {% endif %}
-<h5>Knygos egzemplioriai:</h5>
+    <h5>Knygos egzemplioriai:</h5>
 {% for bookinstance in book.bookinstance_set.all  %}
-    <hr/>
-    <p>Bus prieinama: {{ bookinstance.due_back }}</p>
-    <p>Kodas: {{ bookinstance.id }} </p>
-    <p class="{% if bookinstance.status == 'g' %} text-success
+<hr/>
+<p>Bus prieinama: {{ bookinstance.due_back }}</p>
+<p>Kodas: {{ bookinstance.id }} </p>
+<p class="{% if bookinstance.status == 'g' %} text-success
               {% elif bookinstance.status == 'r' %} text-warning
               {% elif bookinstance.status == 'p' %} text-danger
               {% else %} text-muted
